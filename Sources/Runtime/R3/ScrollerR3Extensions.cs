@@ -6,7 +6,6 @@
 
 #if FANCY_SCROLL_VIEW_R3_SUPPORT
 using R3;
-using R3.Triggers;
 
 namespace FancyScrollView
 {
@@ -19,8 +18,8 @@ namespace FancyScrollView
         {
             return Observable.FromEvent<ScrollState>(
                 h => scroller.ScrollStateChanged += h,
-                h => scroller.ScrollStateChanged -= h)
-                .TakeUntil(scroller.OnDestroyAsObservable());
+                h => scroller.ScrollStateChanged -= h,
+                scroller.destroyCancellationToken);
         }
     }
 }
