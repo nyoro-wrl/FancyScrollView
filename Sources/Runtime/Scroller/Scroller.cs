@@ -148,7 +148,7 @@ namespace FancyScrollView
 
         Action<float> onValueChanged;
         Action<int> onSelectionChanged;
-        Action<ScrollState> onScrollStateChanged;
+        public event Action<ScrollState> ScrollStateChanged;
 
         Vector2 beginDragPointerPosition;
         float scrollStartPosition;
@@ -224,12 +224,6 @@ namespace FancyScrollView
         /// </summary>
         /// <param name="callback">選択位置が変化したときのコールバック.</param>
         public void OnSelectionChanged(Action<int> callback) => onSelectionChanged = callback;
-
-        /// <summary>
-        /// スクロール状態が変化したときのコールバックを設定します.
-        /// </summary>
-        /// <param name="callback">スクロール状態が変化したときのコールバック.</param>
-        public void OnScrollStateChanged(Action<ScrollState> callback) => onScrollStateChanged = callback;
 
         /// <summary>
         /// アイテムの総数を設定します.
@@ -619,7 +613,7 @@ namespace FancyScrollView
 
             var currentState = CalculateScrollState();
             if (prevScrollState != currentState)
-                onScrollStateChanged?.Invoke(currentState);
+                ScrollStateChanged?.Invoke(currentState);
             prevScrollState = currentState;
 
             prevPosition = currentPosition;

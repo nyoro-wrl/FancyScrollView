@@ -1,0 +1,14 @@
+{
+	"name": "FancyScrollView.R3",
+	"references": [
+		"FancyScrollView",
+		"R3"
+	],
+	"versionDefines": [
+		{
+			"name": "com.cysharp.r3",
+			"expression": "",
+			"define": "FANCY_SCROLL_VIEW_R3_SUPPORT"
+		}
+	]
+}
