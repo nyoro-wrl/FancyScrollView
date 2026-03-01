@@ -6,6 +6,7 @@
 
 #if FANCY_SCROLL_VIEW_R3_SUPPORT
 using R3;
+using R3.Triggers;
 
 namespace FancyScrollView
 {
