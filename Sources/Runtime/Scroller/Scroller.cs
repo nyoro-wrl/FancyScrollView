@@ -293,6 +293,26 @@ namespace FancyScrollView
         }
 
         /// <summary>
+        /// 慣性スクロールおよびスクロールアニメーションを即座に停止します.
+        /// 現在位置は変更されません.
+        /// </summary>
+        public void StopScrolling()
+        {
+            velocity = 0f;
+            autoScrollState.Reset();
+        }
+
+        /// <summary>
+        /// 慣性スクロールが実行中かどうかを取得します.
+        /// ドラッグ中や <see cref="ScrollTo"/> によるアニメーション中は <c>false</c> を返します.
+        /// </summary>
+        public bool IsInertiaScrolling =>
+            !autoScrollState.Enable &&
+            !dragging &&
+            inertia &&
+            !Mathf.Approximately(velocity, 0f);
+
+        /// <summary>
         /// <paramref name="sourceIndex"/> から <paramref name="destIndex"/> に移動する際の移動方向を返します.
         /// スクロール範囲が無制限に設定されている場合は, 最短距離の移動方向を返します.
         /// </summary>
