@@ -78,6 +78,8 @@ namespace FancyScrollView
         }
 
         [SerializeField] float decelerationRate = 0.03f;
+        [SerializeField] float inertiaStopVelocity = 0.001f;
+        [SerializeField] float inertiaStopEventVelocity = 0.001f;
 
         /// <summary>
         /// スクロールの減速率. <see cref="Inertia"/> が <c>true</c> の場合のみ有効です.
@@ -146,6 +148,7 @@ namespace FancyScrollView
 
         Action<float> onValueChanged;
         Action<int> onSelectionChanged;
+        Action<ScrollState> onScrollStateChanged;
 
         Vector2 beginDragPointerPosition;
         float scrollStartPosition;
@@ -158,6 +161,7 @@ namespace FancyScrollView
         bool scrolling;
         bool dragging;
         float velocity;
+        ScrollState prevScrollState;
 
         [Serializable]
         class Snap
@@ -220,6 +224,12 @@ namespace FancyScrollView
         /// </summary>
         /// <param name="callback">選択位置が変化したときのコールバック.</param>
         public void OnSelectionChanged(Action<int> callback) => onSelectionChanged = callback;
+
+        /// <summary>
+        /// スクロール状態が変化したときのコールバックを設定します.
+        /// </summary>
+        /// <param name="callback">スクロール状態が変化したときのコールバック.</param>
+        public void OnScrollStateChanged(Action<ScrollState> callback) => onScrollStateChanged = callback;
 
         /// <summary>
         /// アイテムの総数を設定します.
@@ -310,7 +320,15 @@ namespace FancyScrollView
             !autoScrollState.Enable &&
             !dragging &&
             inertia &&
-            !Mathf.Approximately(velocity, 0f);
+            Mathf.Abs(velocity) >= inertiaStopVelocity;
+
+        ScrollState CalculateScrollState()
+        {
+            if (dragging) return ScrollState.Dragging;
+            if (autoScrollState.Enable) return ScrollState.AutoScrolling;
+            if (inertia && Mathf.Abs(velocity) >= inertiaStopEventVelocity) return ScrollState.InertiaScrolling;
+            return ScrollState.Idle;
+        }
 
         /// <summary>
         /// <paramref name="sourceIndex"/> から <paramref name="destIndex"/> に移動する際の移動方向を返します.
@@ -555,7 +573,7 @@ namespace FancyScrollView
                 {
                     velocity *= Mathf.Pow(decelerationRate, deltaTime);
 
-                    if (Mathf.Abs(velocity) < 0.001f)
+                    if (Mathf.Abs(velocity) < inertiaStopVelocity)
                     {
                         velocity = 0f;
                     }
@@ -598,6 +616,11 @@ namespace FancyScrollView
                 else
                     velocity = Mathf.Lerp(velocity, newVelocity, deltaTime * 10f);
             }
+
+            var currentState = CalculateScrollState();
+            if (prevScrollState != currentState)
+                onScrollStateChanged?.Invoke(currentState);
+            prevScrollState = currentState;
 
             prevPosition = currentPosition;
             scrolling = false;

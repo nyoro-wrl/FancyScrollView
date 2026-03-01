@@ -22,6 +22,8 @@ namespace FancyScrollView
         SerializedProperty scrollSensitivity;
         SerializedProperty inertia;
         SerializedProperty decelerationRate;
+        SerializedProperty inertiaStopVelocity;
+        SerializedProperty inertiaStopEventVelocity;
         SerializedProperty snap;
         SerializedProperty draggable;
         SerializedProperty scrollbar;
@@ -38,6 +40,8 @@ namespace FancyScrollView
             scrollSensitivity = serializedObject.FindProperty("scrollSensitivity");
             inertia = serializedObject.FindProperty("inertia");
             decelerationRate = serializedObject.FindProperty("decelerationRate");
+            inertiaStopVelocity = serializedObject.FindProperty("inertiaStopVelocity");
+            inertiaStopEventVelocity = serializedObject.FindProperty("inertiaStopEventVelocity");
             snap = serializedObject.FindProperty("snap");
             draggable = serializedObject.FindProperty("draggable");
             scrollbar = serializedObject.FindProperty("scrollbar");
@@ -116,6 +120,8 @@ namespace FancyScrollView
                 using (new EditorGUI.IndentLevelScope())
                 {
                     EditorGUILayout.PropertyField(decelerationRate);
+                    EditorGUILayout.PropertyField(inertiaStopVelocity);
+                    EditorGUILayout.PropertyField(inertiaStopEventVelocity);
                     EditorGUILayout.PropertyField(snap);
                 }
             }
