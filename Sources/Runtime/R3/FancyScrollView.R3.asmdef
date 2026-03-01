@@ -2,7 +2,7 @@
 	"name": "FancyScrollView.R3",
 	"references": [
 		"FancyScrollView",
-		"R3"
+		"R3.Unity"
 	],
 	"versionDefines": [
 		{
