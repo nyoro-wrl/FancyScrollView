@@ -1,3 +1,6 @@
 ﻿{
-	"name": "FancyScrollView"
+	"name": "FancyScrollView",
+	"references": [
+		"UnityEngine.UI"
+	]
 }

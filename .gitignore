@@ -62,3 +62,4 @@ crashlytics-build.properties
 # Claude Code local settings
 .claude/
 CLAUDE.md
+CLAUDE.md.meta

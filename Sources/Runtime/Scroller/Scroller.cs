@@ -593,7 +593,10 @@ namespace FancyScrollView
             if (!autoScrollState.Enable && (dragging || scrolling) && inertia)
             {
                 var newVelocity = (currentPosition - prevPosition) / deltaTime;
-                velocity = Mathf.Lerp(velocity, newVelocity, deltaTime * 10f);
+                if (Mathf.Approximately(currentPosition, prevPosition))
+                    velocity = 0f;
+                else
+                    velocity = Mathf.Lerp(velocity, newVelocity, deltaTime * 10f);
             }
 
             prevPosition = currentPosition;
