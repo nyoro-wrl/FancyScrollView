@@ -18,7 +18,8 @@ namespace FancyScrollView
         {
             return Observable.FromEvent<ScrollState>(
                 h => scroller.ScrollStateChanged += h,
-                h => scroller.ScrollStateChanged -= h);
+                h => scroller.ScrollStateChanged -= h)
+                .TakeUntilDestroy(scroller);
         }
     }
 }

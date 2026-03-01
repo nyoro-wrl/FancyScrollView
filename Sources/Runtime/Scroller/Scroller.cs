@@ -203,6 +203,12 @@ namespace FancyScrollView
             }
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            ScrollStateChanged = null;
+        }
+
         protected override void Start()
         {
             base.Start();
