@@ -147,6 +147,8 @@ namespace FancyScrollView
                 }
 
                 cell.SetContext(Context);
+                if (cell is IFancyCellScrollViewReceiver<TItemData, TContext> receiver)
+                    receiver.SetScrollView(this);
                 cell.Initialize();
                 cell.SetVisible(false);
                 pool.Add(cell);
