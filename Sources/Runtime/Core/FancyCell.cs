@@ -57,6 +57,11 @@ namespace FancyScrollView
         public abstract void UpdateContent(TItemData itemData);
 
         /// <summary>
+        /// このセルに初めてコンテンツが割り当てられたとき、<see cref="UpdateContent"/> の直後に一度だけ呼ばれます.
+        /// </summary>
+        public abstract void InitializeContent();
+
+        /// <summary>
         /// <c>0.0f</c> ~ <c>1.0f</c> の値に基づいてこのセルのスクロール位置を更新します.
         /// </summary>
         /// <param name="position">ビューポート範囲の正規化されたスクロール位置.</param>

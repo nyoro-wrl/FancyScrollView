@@ -176,9 +176,12 @@ namespace FancyScrollView
 
                 if (forceRefresh || cell.Index != index || !cell.IsVisible)
                 {
+                    var isFirst = cell.Index < 0;
                     cell.Index = index;
                     cell.SetVisible(true);
                     cell.UpdateContent(ItemsSource[index]);
+                    if (isFirst)
+                        cell.InitializeContent();
                 }
 
                 cell.UpdatePosition(position);

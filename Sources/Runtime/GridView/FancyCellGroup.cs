@@ -48,18 +48,24 @@ namespace FancyScrollView
         }
 
         /// <inheritdoc/>
+        public override void InitializeContent() { }
+
+        /// <inheritdoc/>
         public override void UpdateContent(TItemData[] contents)
         {
             var firstCellIndex = Index * Context.GetGroupCount();
 
             for (var i = 0; i < Cells.Length; i++)
             {
+                var isFirst = Cells[i].Index < 0;
                 Cells[i].Index = i + firstCellIndex;
                 Cells[i].SetVisible(i < contents.Length);
 
                 if (Cells[i].IsVisible)
                 {
                     Cells[i].UpdateContent(contents[i]);
+                    if (isFirst)
+                        Cells[i].InitializeContent();
                 }
             }
         }
