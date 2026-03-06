@@ -366,6 +366,11 @@ namespace FancyScrollView
                 return;
             }
 
+            if (autoScrollState.Enable && !autoScrollState.Elastic)
+            {
+                return;
+            }
+
             hold = true;
             velocity = 0f;
             autoScrollState.Reset();
