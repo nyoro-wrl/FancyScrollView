@@ -282,6 +282,16 @@ namespace FancyScrollView
                 return;
             }
 
+            if (autoScrollState.Enable && !autoScrollState.Elastic)
+            {
+                var bEndPosition = CircularPosition(currentPosition + movementAmount, totalCount);
+                var aEndPosition = CircularPosition(autoScrollState.EndPosition, totalCount);
+                if (Mathf.Approximately(bEndPosition, aEndPosition))
+                {
+                    return;
+                }
+            }
+
             autoScrollState.Reset();
             autoScrollState.Enable = true;
             autoScrollState.Duration = duration;
