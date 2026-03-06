@@ -268,7 +268,16 @@ namespace FancyScrollView
         {
             if (duration <= 0f)
             {
-                Position = CircularPosition(position, totalCount);
+                var dest = CircularPosition(position, totalCount);
+                if (!Mathf.Approximately(dest, currentPosition))
+                    Position = dest;
+                onComplete?.Invoke();
+                return;
+            }
+
+            var movementAmount = CalculateMovementAmount(currentPosition, position);
+            if (Mathf.Approximately(movementAmount, 0f))
+            {
                 onComplete?.Invoke();
                 return;
             }
@@ -278,7 +287,7 @@ namespace FancyScrollView
             autoScrollState.Duration = duration;
             autoScrollState.EasingFunction = easingFunction ?? DefaultEasingFunction;
             autoScrollState.StartTime = Time.unscaledTime;
-            autoScrollState.EndPosition = currentPosition + CalculateMovementAmount(currentPosition, position);
+            autoScrollState.EndPosition = currentPosition + movementAmount;
             autoScrollState.OnComplete = onComplete;
 
             velocity = 0f;
